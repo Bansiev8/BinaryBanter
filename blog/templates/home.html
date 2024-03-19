@@ -1,0 +1,46 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block content %}
+<style>
+    body {
+        font-family: kode mono;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+    
+    .head_text {
+        color: white;
+    }
+    
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+<section class = "px-5">
+    <div class="container pb-5">
+        <ul>
+            <h3><u>Recommended Posts</u></h3>
+            {% for post in post_list %}
+                <div class="row g-4 mt-2 ">
+                    <div class="col-lg-9 col-sm-12 bg-light p-3">
+                        <a class="text-decoration-none fw-bold"  href="{% url 'post_detail' post.slug %}" style="color:black;"> {{ post.title }} </a> - {{ post.created_at | date:"D d M Y" }}<br/>
+                        <small>Tags: {{ post.post_tags }}</small> <br/>
+                        {{ post.content | safe | slice:":200" }}...<br/>
+                        <a href="{% url 'post_detail' post.slug %}" style="color: black;">
+                            <small>read more</small>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-12">
+                        {% if post.feature_image %}
+                            <img src="{{post.feature_image.url}}" class="img-fluid rounded" alt={{post.title}}>
+                        {% else %}
+                            <img src="{% static 'images/default_blog_pic.jpg' %}" class="img-fluid rounded" alt={{post.title}}>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock %}
