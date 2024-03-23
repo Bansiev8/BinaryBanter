@@ -8,13 +8,9 @@
         background-color: #fdfdfd;
     }
     
-    .head_text {
-        color: white;
-    }
-    
-    .card {
-        box-shadow: 0 16px 48px #E3E7EB;
-    }
+    .blogtitle:hover {
+    text-decoration: underline;
+  }
 </style>
 
 <section class = "px-5">
@@ -24,9 +20,11 @@
             {% for post in post_list %}
                 <div class="row g-4 mt-2 ">
                     <div class="col-lg-9 col-sm-12 bg-light p-3">
-                        <a class="text-decoration-none fw-bold"  href="{% url 'post_detail' post.slug %}" style="color:black;"> {{ post.title }} </a> - {{ post.created_at | date:"D d M Y" }}<br/>
-                        <small>Tags: {{ post.post_tags }}</small> <br/>
-                        {{ post.content | safe | slice:":200" }}...<br/>
+                        <div class="blogtitle">
+                            <a class="text-decoration-none fw-bold"  href="{% url 'post_detail' post.slug %}" style="color:black;"> {{ post.title }} </a> - {{ post.created_at | date:"D d M Y" }}<br/>
+                        </div>
+                            <small>Tags: {{ post.post_tags }}</small> <br/>
+                        {{ post.content | safe | slice:":200"}}...<br/>
                         <a href="{% url 'post_detail' post.slug %}" style="color: black;">
                             <small>read more</small>
                         </a>
