@@ -29,7 +29,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['binarybanter.ie', 'www.binarybanter.ie', 'localhost']
 CSRF_TRUSTED_ORIGINS = ["https://binarybanter.ie"]
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
