@@ -12,6 +12,11 @@
         text-decoration: underline;
     }
 
+    .blogtitle a {
+        font-size: 16px; /* Reduce font size of blog title */
+        font-weight: bold; /* Keep it bold */
+    }
+
     /* Custom CSS */
     @media (max-width: 767px) {
         .blogtitle-details {
@@ -23,11 +28,25 @@
             max-width: 50%;
             padding: 0;
         }
+
+        .col-mobile:not(:last-child) {
+            margin-bottom: 15px; /* Add margin between columns on small devices */
+        }
     }
 
     @media (min-width: 768px) {
         .blogtitle-details {
             margin-top: 10px; /* Add some space between blogtitle and blogtitle-details */
+        }
+
+        .col-md-9,
+        .col-md-3 {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .main-text {
+            margin-bottom: 15px; /* Add margin between main-text and main-img on medium and large devices */
         }
     }
 </style>
@@ -35,11 +54,10 @@
 <section class="px-3">
     <div class="container pb-5">
         <ul class="list-unstyled">
-            <!-- <h3><u>Recommended Posts</u></h3> -->
             {% for post in post_list %}
             <li>
                 <div class="row g-4 mt-2">
-                    <div class="col-md-9 col-sm-12 col-xs-12 col-mobile bg-light p-3"> <!-- Modified column class -->
+                    <div class="main-text col-md-9 col-sm-12 col-xs-12 col-mobile bg-light p-3"> <!-- Modified column class -->
                         <div class="blogtitle">
                             <a class="text-decoration-none fw-bold" href="{% url 'post_detail' post.slug %}" style="color:black;"> {{ post.title }} </a> - {{ post.created_at | date:"D d M Y" }}<br/>
                         </div>
@@ -51,7 +69,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12 col-mobile"> <!-- Modified column class -->
+                    <div class="main-img col-md-3 col-sm-12 col-xs-12 col-mobile"> <!-- Modified column class -->
                         {% if post.feature_image %}
                         <img src="{{post.feature_image.url}}" class="img-fluid rounded" alt="{{post.title}}">
                         {% else %}
