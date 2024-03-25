@@ -98,11 +98,13 @@
                         </div>
                     </div>
                     <div class="main-img col-md-3 col-sm-12 col-xs-12 col-mobile">
-                        {% if post.feature_image %}
-                        <img src="{{post.feature_image.url}}" class="img-fluid rounded" alt="{{post.title}}">
-                        {% else %}
-                        <img src="{% static 'images/default_blog_pic.jpg' %}" class="img-fluid rounded" alt="{{post.title}}">
-                        {% endif %}
+                        <a class="text-decoration-none fw-bold" href="{% url 'post_detail' post.slug %}" style="color:black;">
+                            {% if post.feature_image %}
+                            <img src="{{post.feature_image.url}}" class="img-fluid rounded" alt="{{post.title}}">
+                            {% else %}
+                            <img src="{% static 'images/default_blog_pic.jpg' %}" class="img-fluid rounded" alt="{{post.title}}">
+                            {% endif %}
+                        </a>
                     </div>
                 </div>
             </li>
