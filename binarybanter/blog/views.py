@@ -21,7 +21,6 @@ class PostDetail(generic.DetailView):
         context = super().get_context_data(**kwargs)
         for item in model.objects.filter(slug=self.kwargs.get('slug')):
             time = str(readtime.of_markdown(item.content))
-            print(time)
         context['extra_key'] = time
         return context
 
