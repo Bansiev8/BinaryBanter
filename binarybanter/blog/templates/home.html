@@ -13,8 +13,8 @@
     }
 
     .blogtitle a {
-        font-size: 16px; /* Reduce font size of blog title */
-        font-weight: bold; /* Keep it bold */
+        font-size: 16px; 
+        font-weight: bold;
     }
 
     /* Custom CSS */
@@ -30,13 +30,38 @@
         }
 
         .col-mobile:not(:last-child) {
-            margin-bottom: 15px; /* Add margin between columns on small devices */
+            margin-bottom: 15px; 
+        }
+
+        .main-text,
+        .main-img {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-text {
+            flex: 2; 
+            align-items: stretch; 
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin-right: auto;
+        }
+
+        .main-img {
+            flex: 1; 
+            margin-top: 10px; 
+            align-items: stretch; 
+        }
+
+        .main-img img {
+            height: 100%; 
+            width: auto; 
         }
     }
 
     @media (min-width: 768px) {
         .blogtitle-details {
-            margin-top: 10px; /* Add some space between blogtitle and blogtitle-details */
+            margin-top: 10px; 
         }
 
         .col-md-9,
@@ -46,7 +71,9 @@
         }
 
         .main-text {
-            margin-bottom: 15px; /* Add margin between main-text and main-img on medium and large devices */
+            margin-bottom: 15px; 
+            border: 1px solid #ccc; 
+            padding: 10px; 
         }
     }
 </style>
@@ -57,11 +84,11 @@
             {% for post in post_list %}
             <li>
                 <div class="row g-4 mt-2">
-                    <div class="main-text col-md-9 col-sm-12 col-xs-12 col-mobile bg-light p-3"> <!-- Modified column class -->
+                    <div class="main-text col-md-9 col-sm-12 col-xs-12 col-mobile bg-light p-3">
                         <div class="blogtitle">
                             <a class="text-decoration-none fw-bold" href="{% url 'post_detail' post.slug %}" style="color:black;"> {{ post.title }} </a> - {{ post.created_at | date:"D d M Y" }}<br/>
                         </div>
-                        <div class="blogtitle-details"> <!-- Ensure other details are shown below title -->
+                        <div class="blogtitle-details">
                             <small>Tags: {{ post.post_tags }}</small> <br/>
                             {{ post.content | safe | slice:":200"}}...<br/>
                             <a href="{% url 'post_detail' post.slug %}" style="color: black;">
@@ -69,7 +96,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="main-img col-md-3 col-sm-12 col-xs-12 col-mobile"> <!-- Modified column class -->
+                    <div class="main-img col-md-3 col-sm-12 col-xs-12 col-mobile">
                         {% if post.feature_image %}
                         <img src="{{post.feature_image.url}}" class="img-fluid rounded" alt="{{post.title}}">
                         {% else %}
