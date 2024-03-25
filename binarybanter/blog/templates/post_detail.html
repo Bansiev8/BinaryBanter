@@ -1,7 +1,7 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+{% block content %}
 
 {% load static %}
-
 
 <div class="container px-5">
     <h1 style="text-align: center;">{{ post.title }}</h1><br/>
@@ -12,7 +12,7 @@
     {% endif %}
     <br/>
     <small>
-        Tags: {{ post.post_tags }} - {{ post.created_at | date:"D d M Y" }} 
+        Tags: {{ post.post_tags }} - {{ post.created_at | date:"D d M Y" }} - {{ extra_key }}
         {% if user.is_authenticated %}
             <a href="{% url 'update_blog' post.pk %}">Edit</a>&nbsp;
             <a href="{% url 'delete_blog' post.pk %}">Delete</a>
