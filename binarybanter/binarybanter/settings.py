@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-_^lfj$-r+8t&x41u39eg1-qgfhz3=-njy5czc9r#c*14p+mm+f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['binarybanter.ie', 'www.binarybanter.ie']
+ALLOWED_HOSTS = ['binarybanter.ie', 'www.binarybanter.ie', 'localhost']
 CSRF_TRUSTED_ORIGINS = ["https://binarybanter.ie"]
 
 # Application definition
