@@ -42,7 +42,7 @@
         .main-text {
             flex: 2; 
             align-items: stretch; 
-            border: 1px solid #ccc; 
+            /* border: 1px solid #ccc;  */
             padding: 10px; 
             margin-right: auto;
         }
@@ -72,7 +72,7 @@
 
         .main-text {
             margin-bottom: 15px; 
-            border: 1px solid #ccc; 
+            /* border: 1px solid #ccc;  */
             padding: 10px; 
         }
     }
@@ -84,7 +84,7 @@
             {% for post in post_list %}
             <li>
                 <div class="row g-4 mt-2">
-                    <div class="main-text col-md-9 col-sm-12 col-xs-12 col-mobile bg-light p-3">
+                    <div class="main-text col-md-9 col-sm-12 col-xs-12 col-mobile p-3">
                         <div class="blogtitle">
                             <a class="text-decoration-none fw-bold" href="{% url 'post_detail' post.slug %}" style="color:black;"> {{ post.title }} </a> - {{ post.created_at | date:"D d M Y" }}<br/>
                         </div>
