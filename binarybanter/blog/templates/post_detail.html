@@ -3,7 +3,7 @@
 
 {% load static %}
 
-<div class="container px-5">
+<div class="container px-5" style="margin-top: 100px;">
     <h1 style="text-align: center;">{{ post.title }}</h1><br/>
     {% if post.feature_image %}
         <img class="img-fluid" src="{{post.feature_image.url}}" alt="{{post.title}}" style="height: 500px; width: 100%;">
