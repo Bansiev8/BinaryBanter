@@ -56,8 +56,12 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">
+                <a class="navbar-brand d-none d-lg-block" href="{% url 'home' %}">
                     <img class="logo rounded" src="{% static 'images/logo.webp' %}" style="height: 60px; width: 200px;" class="img-fluid"/>
+                </a>
+                <!-- Mobile Logo -->
+                <a class="navbar-brand d-lg-none" href="{% url 'home' %}">
+                    <img class="logo rounded" src="{% static 'images/favicon.webp' %}" style="height: 40px; width: 50px;" class="img-fluid"/>
                 </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -101,12 +105,10 @@
                 </ul>
               </div>
             </div>
-          </nav>
+        </nav>
         {% block content %}
         {% endblock content %}
-        <!-- <footer class="py-3 bg-grey">
-            <p class="fw-bold text-dark text-center">There are only 10 types of people in the world. Those that understand binary and those that don’t.</p>
-        </footer> -->
+        <!-- Navigation -->
         <footer class="footer">
             <div class="container">
                 <div class="row pb-3" style="font-size: medium;">
