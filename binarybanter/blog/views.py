@@ -1,9 +1,10 @@
 from django.views import generic
-from .models import Post
-from .forms import Postform
+from .models import Post, Subscription
+from .forms import Postform, SubscriptionForm
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 import readtime
+from django.contrib import messages
 
 
 
@@ -46,3 +47,15 @@ def about(request):
     # blog_list = Post.objects.all().reverse()
     context = {}
     return render(request, './about.html', context)
+
+def subscribe(request):
+    if request.method == 'POST':
+        form = SubscriptionForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            form.save()
+            messages.success(request, f'Successfully subscribed with {email}')
+        else:
+            messages.error(request, 'Subscription failed. Please enter a valid email.')
+        return redirect('home')
+    return redirect('home')

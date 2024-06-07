@@ -10,5 +10,6 @@ urlpatterns = [
     path('article/update/<int:pk>', views.Updateblog.as_view(), name='update_blog'),
     path('article/<int:pk>/delete', views.Deleteblog.as_view(), name='delete_blog'),
     path('about/', views.about, name='about'),
+    path('subscribe/', views.subscribe, name='subscribe'),
 ]
 

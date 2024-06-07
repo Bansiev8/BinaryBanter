@@ -1,6 +1,7 @@
 from django import forms
 
 from .models import Post
+from .models import Subscription
 
 class Postform(forms.ModelForm):
     class Meta:
@@ -12,3 +13,9 @@ class Postform(forms.ModelForm):
             'post_tags': forms.TextInput(attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control'})
         }
+    
+
+class SubscriptionForm(forms.ModelForm):
+    class Meta:
+        model = Subscription
+        fields = ['email']
