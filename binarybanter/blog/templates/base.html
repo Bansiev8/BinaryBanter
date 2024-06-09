@@ -29,8 +29,11 @@
 
     gtag('config', 'G-1EWSG4BES8');
     </script>
+
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.webp' %}">
+    
     <body>
+
         <style>
             body {
             font-family: kode mono;
@@ -63,9 +66,106 @@
                     width: 100px; 
                 }
             }
-        </style>
+            .fact-button-container {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                display: flex;
+                align-items: center;
+            }
+            .fact-button-container img.fact-button {
+                cursor: pointer;
+                height: 90px; 
+                width: 90px;  
+                border-radius: 50%; 
+            }
 
-        <!-- Navigation -->
+            .fact-label {
+                font-size: 14px;
+                margin-right: 10px;
+                white-space: nowrap;
+                animation: point-animation 1.5s infinite alternate;
+            }
+
+            @keyframes point-animation {
+                from {
+                    transform: translateX(0);
+                }
+                to {
+                    transform: translateX(-10px);
+                }
+            }
+            .fact-button {
+                /* padding: 10px 20px; */
+                /* background: linear-gradient(to right, rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4));  */
+                /* backdrop-filter: blur(10px);  */
+                /* -webkit-backdrop-filter: blur(10px);  */
+                /* border: 1px solid black; */
+                padding: 5px 10px;
+                color: black; 
+                cursor: pointer;
+                transition: all 0.3s ease; 
+                border-radius: 25px;
+            }
+
+            .fact-dialog {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                width: 400px;
+                max-width: 90%;
+                padding: 20px;
+                color: black;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                z-index: 1000;
+                transition: transform 0.3s ease;
+                background: linear-gradient(to right, rgba(79, 79, 79, 0.4), rgba(220, 220, 220, 0.4)); 
+                backdrop-filter: blur(10px); 
+                -webkit-backdrop-filter: blur(10px); 
+            }
+            .fact-dialog.open {
+                display: block;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            .close-btn {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background-color: #dcdcdc; 
+                color: black;
+                border: 2px;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                cursor: pointer;
+                font-size: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            .feedback-buttons {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                display: flex;
+            }
+
+            .like-btn, .dislike-btn {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                font-size: 24px;
+                margin-left: 5px;
+            }
+
+            .like-btn:active, .dislike-btn:active {
+                transform: scale(0.9);
+            }
+        </style>
+        
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand d-none d-lg-block" href="{% url 'home' %}">
@@ -118,9 +218,21 @@
               </div>
             </div>
         </nav>
+
         {% block content %}
         {% endblock content %}
-        <!-- Navigation -->
+
+        <!-- <div class="fact-button-container">
+            <button class="fact-button" onclick="showFact()">Tech Fact</button>
+        </div> -->
+        <div class="fact-button-container">
+            <img src="{% static 'images/tech_fact_image.webp' %}" alt="Tech Fact Button" class="fact-button" onclick="showFact()">
+        </div>
+        <div class="fact-dialog" id="factDialog">
+            <span class="close-btn" onclick="closeFact()">&times;</span>
+            <p id="factText">Press the button to get a fact!</p>
+        </div>
+
         <footer class="footer">
             <div class="container">
                 <div class="row pb-3" style="font-size: medium;">
@@ -185,5 +297,54 @@
                 </div>
             </div>
         </footer>
+
+        <script>
+            const techFacts = [
+              "The first computer mouse was made of wood.",
+              "Email existed before the World Wide Web.",
+              "The first domain name ever registered was Symbolics.com.",
+              "The term “bug” to describe a glitch in a system originated when a moth caused a malfunction in an early computer.",
+              "Approximately 90% of all the data in the world has been created in the last two years.",
+              "The world’s first 1-terabyte hard drive was introduced by IBM in 2007. It was the size of a small refrigerator.",
+              "The first 1-gigabyte USB flash drive cost $10,000 in 2000.",
+              "The world’s first portable cell phone, the Motorola DynaTAC 8000X, had a price tag of $3,995 in 1983.",
+              "The world’s first computer virus to spread over the internet, “ILOVEYOU,” infected millions of computers in 2000.",
+              "The first-ever digital voice assistant, IBM’s Shoebox, was introduced in 1961 and could recognize 16 spoken words."
+              // Add more tech facts here
+            ];
+          
+            function getRandomFact() {
+                return techFacts[Math.floor(Math.random() * techFacts.length)];
+            }
+          
+            function showFact() {
+                document.getElementById('factText').innerText = getRandomFact();
+                document.getElementById('factDialog').style.display = 'block';
+                document.getElementById('factDialog').classList.add('open');
+                // Start the line timer
+                document.getElementById('lineTimer').classList.add('open');
+                // Set a timeout to close the dialog after 10 seconds
+                setTimeout(closeFact, 10000);
+            }
+
+            function closeFact() {
+                document.getElementById('factDialog').classList.remove('open');
+                document.getElementById('lineTimer').classList.remove('open'); // Reset the timer
+                setTimeout(() => {
+                    document.getElementById('factDialog').style.display = 'none';
+                    document.getElementById('lineTimer').style.width = '0%'; // Reset the timer width
+                }, 300); // This should match the duration of the transition
+            }
+
+            function likeFact() {
+                console.log('Fact liked!');
+                // Implement the logic to record the like, such as sending it to a server or storing it locally.
+            }
+
+            function dislikeFact() {
+                console.log('Fact disliked!');
+                // Implement the logic to record the dislike, similarly to the like function.
+            }
+        </script>
     </body>
 </html>
