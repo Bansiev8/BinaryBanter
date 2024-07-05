@@ -36,3 +36,23 @@ class Subscription(models.Model):
 
     def __str__(self):
         return self.email
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=100)
+    category_id = models.CharField(max_length=3, unique=True, default=1)
+
+    def __str__(self):
+        return self.category_name
+
+class QuesModel(models.Model):
+    question = models.CharField(max_length=900,null=True)
+    op1 = models.CharField(max_length=200,null=True)
+    op2 = models.CharField(max_length=200,null=True)
+    op3 = models.CharField(max_length=200,null=True)
+    op4 = models.CharField(max_length=200,null=True)
+    ans = models.CharField(max_length=200,null=True)
+    category_id = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    
+    def __str__(self):
+        return self.question
+

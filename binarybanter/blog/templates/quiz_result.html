@@ -1,0 +1,22 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block content %}
+
+<body>
+    <div class="container d-flex justify-content-center align-items-center" style="margin-top: 150px; margin-bottom: 150px;">
+        <div class="col-xs-12 col-sm-8 col-md-6 tool-row">
+            <div class="card" style="border: 0.3rem dotted black; width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title">Score: {{score}}</h5>
+                    <p class="card-text">Percentage: {{percent}}%</p>
+                    <p class="card-text">Time Taken: {{time}} seconds</p>
+                    <p class="card-text">Correct answers: {{correct}}</p>
+                    <p class="card-text">Incorrect answers: {{wrong}}</p>
+                    <h5>All the best for the next quiz!</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

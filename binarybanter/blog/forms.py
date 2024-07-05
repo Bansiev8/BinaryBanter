@@ -1,7 +1,6 @@
 from django import forms
+from .models import Post, Subscription, QuesModel
 
-from .models import Post
-from .models import Subscription
 
 class Postform(forms.ModelForm):
     class Meta:
@@ -19,3 +18,8 @@ class SubscriptionForm(forms.ModelForm):
     class Meta:
         model = Subscription
         fields = ['email']
+
+class addQuestionform(forms.ModelForm):
+    class Meta:
+        model=QuesModel
+        fields="__all__"

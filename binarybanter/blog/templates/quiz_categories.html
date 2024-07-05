@@ -1,0 +1,196 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .game-card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body style="margin-top: 100px;">
+    <div class="container mt-5" style="margin-top:150px; margin-bottom:150px;">
+        <h2 class="mb-4 text-center">Featured Battles</h2>
+        <div class="row">
+            <!-- Trivia 1 - general technology  -->
+            <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="{% url 'quiz' %}?category=brainbenders">
+                                <img class="img-fluid w-100" src="{% static 'images/quiz_1_image.webp' %}" alt="Tech Trivia" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="{% url 'quiz' %}?category=brainbenders">
+                            <p class="font-weight-bold font-20 m-0 mb-2 text-dark">Brain Benders</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif text-dark">Ready to Byte Your Wits?</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trivia 2 - Cyber security related  -->
+            <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="{% url 'quiz' %}?category=brainbreach">
+                                <img class="img-fluid w-100" src="{% static 'images/quiz_2_image.webp' %}" alt="Cyber Security Trivia" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="{% url 'quiz' %}?category=brainbreach">
+                            <p class="font-weight-bold font-20 m-0 mb-2 text-dark">Brain Breach</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif text-dark">Guard Thoughts, Shield Data!</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- Trivia 3 - hardware related  -->
+            <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="{% url 'quiz' %}?category=circuitcore">
+                                <img class="img-fluid w-100" src="{% static 'images/quiz_3_image.webp' %}" alt="Quordle" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="{% url 'quiz' %}?category=circuitcore">
+                            <p class="font-weight-bold font-20 m-0 mb-2 text-dark">Circuit Core</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif text-dark">Unravel the Circuit Mysteries!</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+           <!-- Trivia 4 - Software related -->
+           <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="{% url 'quiz' %}?category=softwareshowdown">
+                                <img class="img-fluid w-100" src="{% static 'images/quiz_4_image.webp' %}" alt="Quordle" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="{% url 'quiz' %}?category=softwareshowdown">
+                            <p class="font-weight-bold font-20 m-0 mb-2 text-dark">Software Showdown</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif text-dark">Do you know your shortcuts?</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+<!-- 
+            <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="https://www.merriam-webster.com/games/quordle">
+                                <img class="img-fluid w-100" src="https://cdn.britannica.com/mendel-resources/3-119/images/games/quordle.jpeg?v=3.119.21" alt="Quordle" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="https://www.merriam-webster.com/games/quordle">
+                            <p class="font-weight-bold font-20 m-0 mb-2">Quordle</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif">Can you solve four words at once?</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="https://www.merriam-webster.com/games/quordle">
+                                <img class="img-fluid w-100" src="https://cdn.britannica.com/mendel-resources/3-119/images/games/quordle.jpeg?v=3.119.21" alt="Quordle" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="https://www.merriam-webster.com/games/quordle">
+                            <p class="font-weight-bold font-20 m-0 mb-2">Quordle</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif">Can you solve four words at once?</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="https://www.merriam-webster.com/games/quordle">
+                                <img class="img-fluid w-100" src="https://cdn.britannica.com/mendel-resources/3-119/images/games/quordle.jpeg?v=3.119.21" alt="Quordle" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="https://www.merriam-webster.com/games/quordle">
+                            <p class="font-weight-bold font-20 m-0 mb-2">Quordle</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif">Can you solve four words at once?</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="https://www.merriam-webster.com/games/quordle">
+                                <img class="img-fluid w-100" src="https://cdn.britannica.com/mendel-resources/3-119/images/games/quordle.jpeg?v=3.119.21" alt="Quordle" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="https://www.merriam-webster.com/games/quordle">
+                            <p class="font-weight-bold font-20 m-0 mb-2">Quordle</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif">Can you solve four words at once?</p>
+                        </a>
+                    </div>
+                </div>
+            </div>      
+
+
+            <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="https://www.merriam-webster.com/games/quordle">
+                                <img class="img-fluid w-100" src="https://cdn.britannica.com/mendel-resources/3-119/images/games/quordle.jpeg?v=3.119.21" alt="Quordle" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="https://www.merriam-webster.com/games/quordle">
+                            <p class="font-weight-bold font-20 m-0 mb-2">Quordle</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif">Can you solve four words at once?</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3 col-sm-6">
+                <div class="card game-card" style="border-radius: 10%;">
+                    <div class="card-body p-0">
+                        <div class="card-media">
+                            <a class="d-block" href="https://www.merriam-webster.com/games/quordle">
+                                <img class="img-fluid w-100" src="https://cdn.britannica.com/mendel-resources/3-119/images/games/quordle.jpeg?v=3.119.21" alt="Quordle" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                            </a>
+                        </div>
+                        <a class="text-center d-block p-3" href="https://www.merriam-webster.com/games/quordle">
+                            <p class="font-weight-bold font-20 m-0 mb-2">Quordle</p>
+                            <p class="font-16 text-gray-600 m-0 font-serif">Can you solve four words at once?</p>
+                        </a>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

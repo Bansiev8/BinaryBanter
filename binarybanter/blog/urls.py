@@ -11,5 +11,9 @@ urlpatterns = [
     path('article/<int:pk>/delete', views.Deleteblog.as_view(), name='delete_blog'),
     path('about/', views.about, name='about'),
     path('subscribe/', views.subscribe, name='subscribe'),
+    path('quiz/', views.quiz_view, name='quiz'),
+    path('quiz-categories/', views.quiz_category_view, name='quiz_category_view'),
+    path('addQuestion/', views.addQuestion ,name='addQuestion'),
+
 ]
 

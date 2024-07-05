@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Subscription
+from .models import Post, Subscription, QuesModel, Category
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -14,3 +14,5 @@ class SubscriptionAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Subscription, SubscriptionAdmin)
+admin.site.register(QuesModel)
+admin.site.register(Category)

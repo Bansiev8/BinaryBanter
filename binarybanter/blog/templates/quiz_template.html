@@ -1,0 +1,64 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block content %}
+<div class="container" style="margin-top: 100px; margin-bottom: 150px;">
+    <h1 class="text-center">Welcome to {{ category }}</h1>
+     
+    <div style="align-items: right;" id="displaytimer"><b>Timer: 0 seconds</b></div>
+     
+    <form method='post' action="{% url 'quiz' %}?category={{ category }}">
+        {% csrf_token %}
+        {% for q in questions %}
+            {% with i=forloop.counter %}
+                <div class="form-group">
+                    <label for="question{{ q.id }}" name="question{{ q.id }}" id="question{{ q.id }}"> {{ i }}. {{ q.question }} - 10 points</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="{{ q.id }}" id="gridRadios{{ q.id }}1" value="{{ q.op1 }}" required>
+                    <label class="form-check-label" for="gridRadios{{ q.id }}1">
+                        {{ q.op1 }}
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="{{ q.id }}" id="gridRadios{{ q.id }}2" value="{{ q.op2 }}">
+                    <label class="form-check-label" for="gridRadios{{ q.id }}2">
+                        {{ q.op2 }}
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="{{ q.id }}" id="gridRadios{{ q.id }}3" value="{{ q.op3 }}">
+                    <label class="form-check-label" for="gridRadios{{ q.id }}3">
+                        {{ q.op3 }}
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="{{ q.id }}" id="gridRadios{{ q.id }}4" value="{{ q.op4 }}">
+                    <label class="form-check-label" for="gridRadios{{ q.id }}4">
+                        {{ q.op4 }}
+                    </label>
+                </div>
+                <br>
+            {% endwith %}
+        {% endfor %}
+        <input id='timer' type='hidden' name="timer" value="">
+        <br>
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+    
+        {% block script %}
+            <script>
+                const timer=document.getElementById('displaytimer')
+                console.log(timer.textContent)
+                const inputtag = document.getElementById('timer')
+     
+                t=0
+                setInterval(()=>{
+                    t+=1
+                    timer.innerHTML ="<b>Timer: " +t+" seconds</b>"
+                    inputtag.value = t
+                },1000)
+            </script>
+        {% endblock script %}
+</div>
+
+{% endblock %}
