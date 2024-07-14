@@ -66,7 +66,6 @@ def quiz_category_view(request):
 
 def quiz_view(request):
     category = request.GET.get('category')
-    print("printing category in post:", category)
     category_dict = {'brainbenders': 1, 'brainbreach' : 2, 'circuitcore': 3, 'softwareshowdown': 4}
     if category_dict[category] == 1:
         questions=QuesModel.objects.filter(category_id_id = 1)

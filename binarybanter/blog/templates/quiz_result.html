@@ -12,8 +12,23 @@
                     <p class="card-text">Time Taken: {{time}} seconds</p>
                     <p class="card-text">Correct answers: {{correct}}</p>
                     <p class="card-text">Incorrect answers: {{wrong}}</p>
-                    <h5>All the best for the next quiz!</h5>
+                    <div class="message">
+                        {% if percent <= 20 %}
+                            It looks like you just tried to divide by zero. Don't worry, you can debug and try again!
+                        {% elif percent <= 40 %}
+                            Not quite byte-sized yet, but you've got the basics down. Let's recompile and give it another go!
+                        {% elif percent <= 60 %}
+                            You've got the main function running, but there's still a few bugs in the system. Keep coding and you'll get there!
+                        {% elif percent <= 80 %}
+                            Your algorithm is almost optimized! Just a few more iterations and you'll be at 100%.
+                        {% else %}
+                            You're the root user of this quiz! All permissions granted for a job well done!
+                        {% endif %}
+                    </div>
                 </div>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <a class="btn btn-dark" href="{% url 'home' %}">Review Answers</a>
             </div>
         </div>
     </div>
