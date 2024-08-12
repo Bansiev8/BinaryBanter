@@ -6,32 +6,70 @@
      
     <div style="align-items: right;" id="displaytimer"><b>Timer: 0 seconds</b></div>
      
+    <style>
+        .option-box {
+            border: 2px dotted black;
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            width: 30%; 
+        }
+    
+        .form-check-input {
+            margin-right: 10px;
+            margin-left: 5px; 
+            appearance: none; 
+            width: 20px;
+            height: 20px;
+            border: 3px dotted black;
+            border-radius: 50%;
+            position: relative;
+        }
+    
+        .form-check-input:checked::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+            background-color: black;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px dotted black;
+        }
+    </style>
+
     <form method='post' action="{% url 'quiz' %}?category={{ category }}">
         {% csrf_token %}
         {% for q in questions %}
             {% with i=forloop.counter %}
                 <div class="form-group">
-                    <label for="question{{ q.id }}" name="question{{ q.id }}" id="question{{ q.id }}"> {{ i }}. {{ q.question }} - 10 points</label>
+                    <label for="question{{ q.id }}" name="question{{ q.id }}" id="question{{ q.id }}"> 
+                        {{ i }}. {{ q.question }} - 10 points
+                    </label>
                 </div>
-                <div class="form-check">
+                <div class="form-check option-box">
                     <input class="form-check-input" type="radio" name="{{ q.id }}" id="gridRadios{{ q.id }}1" value="{{ q.op1 }}" required>
                     <label class="form-check-label" for="gridRadios{{ q.id }}1">
                         {{ q.op1 }}
                     </label>
                 </div>
-                <div class="form-check">
+                <div class="form-check option-box">
                     <input class="form-check-input" type="radio" name="{{ q.id }}" id="gridRadios{{ q.id }}2" value="{{ q.op2 }}">
                     <label class="form-check-label" for="gridRadios{{ q.id }}2">
                         {{ q.op2 }}
                     </label>
                 </div>
-                <div class="form-check">
+                <div class="form-check option-box">
                     <input class="form-check-input" type="radio" name="{{ q.id }}" id="gridRadios{{ q.id }}3" value="{{ q.op3 }}">
                     <label class="form-check-label" for="gridRadios{{ q.id }}3">
                         {{ q.op3 }}
                     </label>
                 </div>
-                <div class="form-check">
+                <div class="form-check option-box">
                     <input class="form-check-input" type="radio" name="{{ q.id }}" id="gridRadios{{ q.id }}4" value="{{ q.op4 }}">
                     <label class="form-check-label" for="gridRadios{{ q.id }}4">
                         {{ q.op4 }}
