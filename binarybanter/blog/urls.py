@@ -14,6 +14,8 @@ urlpatterns = [
     path('quiz/', views.quiz_view, name='quiz'),
     path('quiz-categories/', views.quiz_category_view, name='quiz_category_view'),
     path('addQuestion/', views.addQuestion ,name='addQuestion'),
+    path('bionic/', views.bionic ,name='bionic'),
+
 
 ]
 

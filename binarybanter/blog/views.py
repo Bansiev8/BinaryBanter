@@ -66,6 +66,8 @@ def quiz_category_view(request):
 
 def quiz_view(request):
     category = request.GET.get('category')
+    ip_address = request.META['REMOTE_ADDR']
+    print(ip_address)
     category_dict = {'brainbenders': 1, 'brainbreach' : 2, 'circuitcore': 3, 'softwareshowdown': 4}
     if category_dict[category] == 1:
         questions=QuesModel.objects.filter(category_id_id = 1)
@@ -107,7 +109,9 @@ def quiz_view(request):
             'time': request.POST.get('timer'),
             'correct':correct,
             'wrong':wrong,
-            'percent':format(percent, '.2f')
+            'percent':format(percent, '.2f'),
+            'percentmes': int(percent),
+            'ipaddress': ip_address
         }
         return render(request,'./quiz_result.html',context)
     else:
@@ -134,3 +138,9 @@ def addQuestion(request):
 def quizresults(request):
     context = {}
     return render(request, './quiz_result.html', context)
+
+def bionic(request):
+    context = {}
+    # queryset = Post.objects.filter(status=1).order_by('-created_at')
+    print("jhsdgfjhsdfgjhsd")
+    return redirect('home') 

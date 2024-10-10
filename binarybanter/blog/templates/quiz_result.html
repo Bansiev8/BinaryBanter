@@ -8,19 +8,24 @@
             <div class="card" style="border: 0.3rem dotted black; width: 100%;">
                 <div class="card-body">
                     <h5 class="card-title">Score: {{score}}</h5>
-                    <p class="card-text">Percentage: {{percent}}%</p>
+                    <p class="card-text">Percentage: {{percent |floatformat:"0"}}%</p>
                     <p class="card-text">Time Taken: {{time}} seconds</p>
                     <p class="card-text">Correct answers: {{correct}}</p>
                     <p class="card-text">Incorrect answers: {{wrong}}</p>
+                    <p class="card-text">Ip: {{ipaddress}}</p>
                     <div class="message">
-                        {% if percent <= 20 %}
+                        {% if percentmes <= 20 %}
                             It looks like you just tried to divide by zero. Don't worry, you can debug and try again!
-                        {% elif percent <= 40 %}
+
+                        {% elif percentmes > 20 and percentmes <= 40 %}
                             Not quite byte-sized yet, but you've got the basics down. Let's recompile and give it another go!
-                        {% elif percent <= 60 %}
+
+                        {% elif percentmes > 40 and percentmes <= 60 %}
                             You've got the main function running, but there's still a few bugs in the system. Keep coding and you'll get there!
-                        {% elif percent <= 80 %}
+                            
+                        {% elif percentmes > 60 and percentmes <= 80 %}
                             Your algorithm is almost optimized! Just a few more iterations and you'll be at 100%.
+
                         {% else %}
                             You're the root user of this quiz! All permissions granted for a job well done!
                         {% endif %}
