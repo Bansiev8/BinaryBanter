@@ -10,6 +10,7 @@
     {% else %}
         <img src="{% static 'images/default_blog_pic.jpg' %}" class="img-fluid" alt="{{post.title}}">
     {% endif %}
+
     <div class="d-flex align-items-center mt-4 flex-wrap" style="font-size: 14px">
         <span class="pr-1 fw-bold">Tags:</span>
         <span class="badge rounded-pill bg-dark">{{ post.post_tags }}</span>
@@ -20,10 +21,63 @@
                 <a href="{% url 'delete_blog' post.pk %}">Delete</a>
             {% endif %}
         </span>
-    </div> 
+        
+        <div class="form-check form-switch ml-auto">
+            <label class="form-check-label" for="flexSwitchCheckChecked"><b>Bio</b>nic <b>read</b>ing</label>  
+            <input class="form-check-input ml-2" type="checkbox" id="flexSwitchCheckChecked">
+        </div>
+    </div>
     <hr>
 
-    {{ post.content | safe }}
+    <!-- The ID to target the content for dynamic replacement -->
+    <div id="post-content">
+        {{ post.content | safe }}
+    </div>
 </div>
 <hr><br><br>
+
+
+<script>
+    // Store the original post content in a variable to restore it later
+    var originalContent = document.getElementById('post-content').innerHTML;
+
+    // Event listener for the checkbox toggle
+    document.getElementById('flexSwitchCheckChecked').addEventListener('change', function() {
+    var isChecked = this.checked;
+    var currentUrl = window.location.href;
+
+    fetch("{% url 'bionic' %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"  
+        },
+        body: JSON.stringify({ 
+            isChecked: isChecked,
+            currentUrl: currentUrl
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Make sure response is converted to JSON
+    })
+    .then(data => {
+        if (isChecked) {
+            // If checked, replace content with the modified (bionic) version
+            if (data.modified_html !== null) {
+                document.getElementById('post-content').innerHTML = data.modified_html;
+            }
+        } else {
+            // If unchecked, restore the original content
+            document.getElementById('post-content').innerHTML = originalContent;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error); // Handle and log errors in a more friendly way
+    });
+});
+</script>
+
 {% endblock content %}

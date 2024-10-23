@@ -2,10 +2,12 @@ from django.views import generic
 from .models import Post, Subscription, QuesModel
 from .forms import Postform, SubscriptionForm, addQuestionform
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import readtime
 from django.contrib import messages
-
+import json
+from bs4 import BeautifulSoup
+from django.http import JsonResponse
 
 
 class PostList(generic.ListView):
@@ -134,13 +136,56 @@ def addQuestion(request):
     else: 
         return redirect('home') 
 
-
 def quizresults(request):
     context = {}
     return render(request, './quiz_result.html', context)
 
 def bionic(request):
-    context = {}
-    # queryset = Post.objects.filter(status=1).order_by('-created_at')
-    print("jhsdgfjhsdfgjhsd")
-    return redirect('home') 
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            is_checked = data.get('isChecked')
+
+            if is_checked:
+                print("ischecked:", is_checked) 
+                current_url = data.get('currentUrl')
+                slug = current_url.split("/")[-2]
+        
+                post = Post.objects.get(slug=slug)
+                modified_html = apply_bionic_reading_to_paragraphs(post.content)
+                return JsonResponse({'modified_html': modified_html})
+            else:
+                return JsonResponse({'modified_html': None})
+            
+        except Post.DoesNotExist:
+            return JsonResponse({'error': 'Post not found'}, status=404)
+        
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+        
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+def bionic_reading(text):
+    words = text.split()
+    bionic_text = []
+    
+    for word in words:
+        split_point = max(1, int(len(word) * 0.4))  
+        bold_part = word[:split_point]  
+        normal_part = word[split_point:]  
+        bionic_word = f"<strong>{bold_part}</strong>{normal_part}" 
+        bionic_text.append(bionic_word)
+    
+    return ' '.join(bionic_text)
+
+def apply_bionic_reading_to_paragraphs(html_content):
+    
+    soup = BeautifulSoup(html_content, 'html.parser')
+    
+    for p_tag in soup.find_all('p'):
+        p_text = p_tag.get_text()
+        bionic_text = bionic_reading(p_text)
+        p_tag.clear() 
+        p_tag.append(BeautifulSoup(bionic_text, 'html.parser'))  
+    
+    return str(soup)
