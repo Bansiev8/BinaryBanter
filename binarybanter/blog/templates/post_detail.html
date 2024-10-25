@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block content %}
 
 {% load static %}
@@ -29,55 +29,219 @@
     </div>
     <hr>
 
-    <!-- The ID to target the content for dynamic replacement -->
+    <!-- Custom Audio Player Controls -->
+    <!-- <div id="audio-player" class="audio-player">
+        <button id="play-btn" class="audio-control-btn">
+            <i class="fas fa-play"></i> 
+        </button>
+        <button id="pause-btn" class="audio-control-btn">
+            <i class="fas fa-pause"></i> 
+        </button>
+        <button id="stop-btn" class="audio-control-btn">
+            <i class="fas fa-stop"></i> 
+        </button>
+        <span id="current-time" class="audio-time">00:00</span>/<span id="total-time" class="audio-time">00:00</span>
+    </div>
+    <hr><br> -->
     <div id="post-content">
         {{ post.content | safe }}
     </div>
 </div>
 <hr><br><br>
 
-
 <script>
-    // Store the original post content in a variable to restore it later
     var originalContent = document.getElementById('post-content').innerHTML;
+    var speech = new SpeechSynthesisUtterance();
+    var isPlaying = false;
+    var totalDuration = 0;  
+    var elapsed = 0;  
+    var timerInterval = null;
 
-    // Event listener for the checkbox toggle
     document.getElementById('flexSwitchCheckChecked').addEventListener('change', function() {
-    var isChecked = this.checked;
-    var currentUrl = window.location.href;
+        var isChecked = this.checked;
+        var currentUrl = window.location.href;
 
-    fetch("{% url 'bionic' %}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": "{{ csrf_token }}"  
-        },
-        body: JSON.stringify({ 
-            isChecked: isChecked,
-            currentUrl: currentUrl
+        fetch("{% url 'bionic' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"  
+            },
+            body: JSON.stringify({ 
+                isChecked: isChecked,
+                currentUrl: currentUrl
+            })
         })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json(); // Make sure response is converted to JSON
-    })
-    .then(data => {
-        if (isChecked) {
-            // If checked, replace content with the modified (bionic) version
-            if (data.modified_html !== null) {
-                document.getElementById('post-content').innerHTML = data.modified_html;
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        } else {
-            // If unchecked, restore the original content
-            document.getElementById('post-content').innerHTML = originalContent;
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error); // Handle and log errors in a more friendly way
+            return response.json(); 
+        })
+        .then(data => {
+            if (isChecked) {
+                if (data.modified_html !== null) {
+                    document.getElementById('post-content').innerHTML = data.modified_html;
+                }
+            } else {
+                document.getElementById('post-content').innerHTML = originalContent;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error); 
+        });
     });
-});
+
+    document.getElementById('play-btn').addEventListener('click', function() {
+        if (!isPlaying) {
+            let text = document.getElementById('post-content').innerText;
+            speech = new SpeechSynthesisUtterance(text);
+            speech.rate = 1.0;
+            speech.pitch = 1.0;
+            window.speechSynthesis.speak(speech);
+            isPlaying = true;
+            updatePlayer();
+        } else {
+            window.speechSynthesis.resume();
+            startTimer();
+        }
+        applyClickEffect(this);
+    });
+
+    document.getElementById('pause-btn').addEventListener('click', function() {
+        if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.pause();
+            pauseTimer();
+        }
+        applyClickEffect(this);
+    });
+
+    document.getElementById('stop-btn').addEventListener('click', function() {
+        if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+            resetPlayer();
+        }
+        applyClickEffect(this);
+    });
+
+    function updatePlayer() {
+        let text = document.getElementById('post-content').innerText;
+        let wordCount = text.split(' ').length;
+        totalDuration = Math.floor(wordCount / 2.5);
+
+        document.getElementById('total-time').innerText = formatTime(totalDuration);
+        startTimer();
+    }
+
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval); 
+        timerInterval = setInterval(() => {
+            if (isPlaying) {
+                elapsed += 1;
+                document.getElementById('current-time').innerText = formatTime(elapsed);
+                if (elapsed >= totalDuration) {
+                    resetPlayer();
+                }
+            }
+        }, 1000);
+    }
+
+    function pauseTimer() {
+        clearInterval(timerInterval);
+    }
+
+    function resetPlayer() {
+        isPlaying = false;
+        elapsed = 0;
+        clearInterval(timerInterval);
+        document.getElementById('current-time').innerText = '00:00';
+        document.getElementById('total-time').innerText = '00:00';
+    }
+
+    function formatTime(seconds) {
+        let minutes = Math.floor(seconds / 60);
+        let secs = seconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    speech.onend = function() {
+        resetPlayer();
+    };
+
+    // Stop audio on page unload (when navigating away or refreshing)
+    window.addEventListener('beforeunload', function(event) {
+        if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel(); // Stop the speech synthesis
+        }
+    });
+
+    // Function to apply click effect to buttons
+    function applyClickEffect(button) {
+        button.classList.add('clicked');
+        setTimeout(function() {
+            button.classList.remove('clicked');
+        }, 200);  // Effect lasts for 200ms
+    }
 </script>
+
+<!-- Add FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Add styles for button click effects -->
+<style>
+    .audio-player {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 10px;
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .audio-control-btn {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        font-size: 18px;
+        border-radius: 50%;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: transform 0.2s ease, background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+    }
+
+    .audio-control-btn i {
+        font-size: 16px;
+    }
+
+    .audio-time {
+        font-family: monospace;
+        font-size: 16px;
+        color: #333;
+        margin-left: 15px;
+    }
+
+    /* Hover Effect */
+    .audio-control-btn:hover {
+        transform: scale(1.1);
+        background-color: #333;
+    }
+
+    /* Click Effect */
+    .audio-control-btn.clicked {
+        transform: scale(0.9);
+        background-color: #555;
+    }
+</style>
 
 {% endblock content %}
