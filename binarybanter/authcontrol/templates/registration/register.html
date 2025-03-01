@@ -1,24 +1,114 @@
 {% extends "base.html" %}
 
-{% block title %} Register {% endblock %}
+{% block title %}Register{% endblock %}
 
-
-{% block content%}
-<div class="container px-5" style="margin-top: 100px;">
-    <h1 style="color: black;">Register</h1>
-    <br/><br/>
-    <div class="form-group">
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; margin-top: 100px;">
+    <div class="card p-4 shadow-lg" style="max-width: 450px; width: 100%; border-radius: 12px;">
+        <h2 class="text-center mb-4">Register</h2>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-dark" type="submit">Register</button>
-        </form><br/><br/>
-        <small>Already have an account??</small>
-        <a href="{% url 'login' %}">
-            <button class="btn btn-dark" type="submit">Login</button>
-        </a>
+
+            <!-- Username Field -->
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" id="id_username" name="username" class="form-control" required>
+            </div>
+
+            <!-- Email Field -->
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email" id="id_email" name="email" class="form-control" required>
+            </div>
+
+            <!-- Password Field with Eye Icon -->
+            <div class="mb-3">
+                <label for="id_password1" class="form-label">Password</label>
+                <div class="position-relative">
+                    <input type="password" id="id_password1" name="password1" class="form-control pe-5" required>
+                    <i id="togglePasswordIcon1" class="fas fa-eye techy-eye-icon" onclick="togglePassword('id_password1', 'togglePasswordIcon1')"></i>
+                </div>
+            </div>
+
+            <!-- Confirm Password Field with Eye Icon -->
+            <div class="mb-3">
+                <label for="id_password2" class="form-label">Confirm Password</label>
+                <div class="position-relative">
+                    <input type="password" id="id_password2" name="password2" class="form-control pe-5" required>
+                    <i id="togglePasswordIcon2" class="fas fa-eye techy-eye-icon" onclick="togglePassword('id_password2', 'togglePasswordIcon2')"></i>
+                </div>
+            </div>
+
+            <!-- Register Button -->
+            <div class="d-grid">
+                <button class="btn btn-dark" type="submit">Register</button>
+            </div>
+
+            <!-- Already have an account? -->
+            <div class="text-center mt-3">
+                <small>Already have an account?</small>
+                <a href="{% url 'login' %}" class="btn btn-outline-dark btn-sm">Login</a>
+            </div>
+        </form>
     </div>
 </div>
 
+<!-- FontAwesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 
+<script>
+function togglePassword(inputId, iconId) {
+    var passwordField = document.getElementById(inputId);
+    var toggleIcon = document.getElementById(iconId);
+
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        toggleIcon.classList.remove("fa-eye");
+        toggleIcon.classList.add("fa-eye-slash");
+    } else {
+        passwordField.type = "password";
+        toggleIcon.classList.remove("fa-eye-slash");
+        toggleIcon.classList.add("fa-eye");
+    }
+}
+</script>
+
+<style>
+/* Ensure the form fields align properly */
+.position-relative {
+    position: relative;
+}
+
+/* Input field styling */
+.form-control {
+    height: 45px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding-right: 40px; /* Ensures space for the eye icon */
+}
+
+/* Styling for the eye icon */
+.techy-eye-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d; /* Subtle gray */
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+/* When hovering over the eye icon */
+.techy-eye-icon:hover {
+    color: #007bff; /* Modern blue hover */
+}
+
+/* Ensure the form is pushed down so it's fully visible */
+.container {
+    margin-top: 40px;
+}
+
+</style>
 {% endblock %}

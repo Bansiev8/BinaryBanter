@@ -1,20 +1,94 @@
 {% extends "base.html" %}
 
-{% block title %} Login {% endblock %}
+{% block title %}Login{% endblock %}
 
-
-{% block content%}
-<div class="container px-5 text-center" style="margin-top: 100px;">
-    <h1 style="color: black;">Login</h1>
-    <br/><br/>
-    <div class="form-group">
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; border-radius: 12px;">
+        <h2 class="text-center mb-4">Login</h2>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-dark" type="submit">Login</button>
+
+            <!-- Username Field -->
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" id="id_username" name="username" class="form-control" required>
+            </div>
+
+            <!-- Password Field with Techy Eye Icon -->
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Password</label>
+                <div class="position-relative">
+                    <input type="password" id="id_password" name="password" class="form-control pe-5" required>
+                    <i id="togglePasswordIcon" class="fas fa-eye techy-eye-icon" onclick="togglePassword()"></i>
+                </div>
+            </div>
+
+            <!-- Login Button -->
+            <div class="d-grid">
+                <button class="btn btn-dark" type="submit">Login</button>
+            </div>
         </form>
     </div>
 </div>
 
+<!-- FontAwesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 
+<script>
+function togglePassword() {
+    var passwordField = document.getElementById("id_password");
+    var toggleIcon = document.getElementById("togglePasswordIcon");
+
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        toggleIcon.classList.remove("fa-eye");
+        toggleIcon.classList.add("fa-eye-slash");
+    } else {
+        passwordField.type = "password";
+        toggleIcon.classList.remove("fa-eye-slash");
+        toggleIcon.classList.add("fa-eye");
+    }
+}
+</script>
+
+<style>
+/* Ensure the form fields align properly */
+.position-relative {
+    position: relative;
+}
+
+/* Password field styling */
+#id_password {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    padding-right: 40px; /* Ensures space for the eye icon */
+}
+
+/* Styling for the eye icon */
+.techy-eye-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d; /* Subtle gray */
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+/* When hovering over the eye icon */
+.techy-eye-icon:hover {
+    color: #007bff; /* Modern blue hover */
+}
+
+/* Match Username and Password Field */
+#id_username, #id_password {
+    height: 45px; /* Ensures both fields are same height */
+    font-size: 16px;
+}
+</style>
 {% endblock %}
