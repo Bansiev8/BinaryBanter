@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-_^lfj$-r+8t&x41u39eg1-qgfhz3=-njy5czc9r#c*14p+mm+f
 DEBUG = True
 
 ALLOWED_HOSTS = ['binarybanter.ie', 'www.binarybanter.ie', 'localhost', 'heal.binarybanter.ie']
-CSRF_TRUSTED_ORIGINS = ["https://binarybanter.ie"]
+CSRF_TRUSTED_ORIGINS = ['https://binarybanter.ie', 'https://www.binarybanter.ie']
 
 
 INSTALLED_APPS = [
@@ -124,12 +124,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'binarybanter' / 'blog' / 'static'
+BASE_DIR / 'blog' / 'static',  # static files used during development
 ]
 
+# Media files (user-uploaded)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
